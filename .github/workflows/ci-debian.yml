@@ -18,12 +18,12 @@ permissions:
 
 jobs:
   CI:
-    runs-on: [self-hosted, runner-RTE-12]
+    runs-on: [self-hosted]
     steps:
 
       - name: Initialize sources
         run: mkdir ${{ env.WORK_DIR }}; cd ${{ env.WORK_DIR }};
-             git clone -q --depth 1 --recurse-submodules -b main https://github.com/seapath/ci ci;
+             git clone -q --depth 1 --recurse-submodules -b main https://github.com/insatomcat/seapath-ci ci;
              echo "CI sources downloaded successfully";
              ci/launch.sh init;
 
