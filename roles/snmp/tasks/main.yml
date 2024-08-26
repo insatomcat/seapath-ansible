@@ -37,16 +37,15 @@
 
   - name: Synchronization of snmp_ scripts
     ansible.posix.synchronize:
-      src: ../src/debian/snmp/
+      src: scripts/
       dest: /usr/local/bin/
       rsync_opts:
-      - "--include=virt-df.sh"
-      - "--exclude=*"
+      - "--include=*"
       - "--chmod=F755"
       - "--chown=root:root"
   - name: Snmp config
     ansible.builtin.template:
-      src: ../src/debian/snmp/snmpd.conf.j2
+      src: snmpd.conf.j2
       dest: /etc/snmp/snmpd.conf
       mode: '0644'
       owner: root
@@ -54,17 +53,17 @@
     register: snmpd_conf
   - name: SNMP PASS AGENT script run by net-snmp for seapath tree
     copy:
-      src: ../src/debian/snmp/exposeseapathsnmp.pl
+      src: exposeseapathsnmp.pl
       dest: "/usr/local/bin/exposeseapathsnmp.pl"
       mode: '0755'
   - name: script run by cron job to generate snmp data
     copy:
-      src: ../src/debian/snmp/snmp_getdata.py
+      src: snmp_getdata.py
       dest: "/usr/local/sbin/snmp_getdata.py"
       mode: '0755'
   - name: cron job to generate snmp data
     copy:
-      src: ../src/debian/snmp/seapathsnmp.cron
+      src: seapathsnmp.cron
       dest: "/etc/cron.d/seapathsnmp"
       mode: '0644'
   - name: Wait for DHCP for SNMP
@@ -82,7 +81,7 @@
 
   - name: Install sudo Debian-snmp user rules
     template:
-      src: ../src/debian/sudoers/Debian-snmp.j2
+      src: Debian-snmp.j2
       dest: /etc/sudoers.d/Debian-snmp
       owner: root
       group: root
