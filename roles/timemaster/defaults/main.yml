@@ -2,4 +2,5 @@
 # SPDX-License-Identifier: Apache-2.0
 
 ---
-configure_ha_tmpdir: "/tmp"
+timemaster_ptp_network_transport: "L2"
+timemaster_ptp_delay_mechanism: "P2P"
